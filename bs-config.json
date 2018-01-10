@@ -1,5 +1,10 @@
 {
   "server": {
     "baseDir": ["./src", "./build/contracts"]
+  },
+  "scripts": {
+    "dev": "lite-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
+

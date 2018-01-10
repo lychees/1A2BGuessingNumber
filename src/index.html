@@ -19,37 +19,19 @@
   </head>
   <body>
     <div class="container">
-      <div class="row">
-        <div class="col-xs-12 col-sm-8 col-sm-push-2">
-          <h1 class="text-center">Pete's Pet Shop</h1>
-          <hr/>
-          <br/>
-        </div>
-      </div>
-
-      <div id="petsRow" class="row">
-        <!-- PETS LOAD HERE -->
-      </div>
+      <h3>
+        <p>游戏玩法: 合约随机生成四位随机数字，1M Wei 猜一次，每次返回
+          <ul>
+            <li>A：有几个数字猜测正确。</li>
+            <li>B：有几次相同的数字出现了但位置不对。</li>
+          </ul>
+          第一个猜对全部正确数字的玩家，将获得奖池资金的一半，并生成新的局面。
+        </p>
+        <p>当前奖池余额:</p> <textarea id="balance">0</textarea>
+        <p><input type="text" id="Text1" size="6" maxlength="6" value="0000"></p>
+        <button class="btn btn-default btn-submit" type="button" data-id="0">提交</button>
+      </h3>
     </div>
-
-    <div id="petTemplate" style="display: none;">
-      <div class="col-sm-6 col-md-4 col-lg-3">
-        <div class="panel panel-default panel-pet">
-          <div class="panel-heading">
-            <h3 class="panel-title">Scrappy</h3>
-          </div>
-          <div class="panel-body">
-            <img alt="140x140" data-src="holder.js/140x140" class="img-rounded img-center" style="width: 100%;" src="https://animalso.com/wp-content/uploads/2017/01/Golden-Retriever_6.jpg" data-holder-rendered="true">
-            <br/><br/>
-            <strong>Breed</strong>: <span class="pet-breed">Golden Retriever</span><br/>
-            <strong>Age</strong>: <span class="pet-age">3</span><br/>
-            <strong>Location</strong>: <span class="pet-location">Warren, MI</span><br/><br/>
-            <button class="btn btn-default btn-adopt" type="button" data-id="0">Adopt</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->

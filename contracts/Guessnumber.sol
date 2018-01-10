@@ -1,5 +1,5 @@
-pragma solidity ^0.4.19;
-contract guess {
+pragma solidity ^0.4.18;
+contract guessnumber {
     mapping(uint => uint) public answer;
     uint public seed = 2569;
 
