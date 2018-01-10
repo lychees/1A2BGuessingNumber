@@ -71,8 +71,12 @@ App = {
           var account = accounts[0];
           App.contracts.Guessnumber.deployed().then(function(instance) {
               GuessnumberInstance = instance;
-              return GuessnumberInstance.guess(ans, {from: account});
+              return GuessnumberInstance.guess(ans, {
+                  from: account,
+                  value:  10000000000000000, //0.01 ETH
+              });
           }).then(function(result) {
+              console.log(result);
               return App.markAdopted();
           }).catch(function(err) {
               console.log(err.message);
