@@ -55,9 +55,21 @@ App = {
     $(document).on('click', '.btn-submit', App.handleSubmit);
   },
 
-  markAdopted: function(adopters, account) {
-
-
+  markAdopted: function() {
+      console.log('markAdopted');
+      App.contracts.Guessnumber.deployed().then(function(instance) {
+          GuessnumberInstance = instance;
+          console.log(web3.eth);
+          // How do I call web3.eth.getBalance() in metamask?
+          // https://github.com/MetaMask/faq/issues/23
+          web3.eth.getBalance(GuessnumberInstance.address, 'latest', function(error, balance){
+              console.log(balance);
+              $("#balance")[0].value = balance;
+          });
+      }).then(function(balance) {
+      }).catch(function(err) {
+          console.log(err.message);
+      });
   },
 
   handleSubmit: function(event) {
