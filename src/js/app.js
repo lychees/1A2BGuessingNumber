@@ -1,40 +1,36 @@
 App = {
-  web3Provider: null,
-  contracts: {},
+    web3Provider: null,
+    contracts: {},
 
-  init: function() {
-    // Load pets.
-    $.getJSON('../pets.json', function(data) {
-      var petsRow = $('#petsRow');
-      var petTemplate = $('#petTemplate');
+    init: function() {
+        // Load pets.
+        $.getJSON('../pets.json', function(data) {
+            var petsRow = $('#petsRow');
+            var petTemplate = $('#petTemplate');
+            for (i = 0; i < data.length; i ++) {
+                petTemplate.find('.panel-title').text(data[i].name);
+                petTemplate.find('img').attr('src', data[i].picture);
+                petTemplate.find('.pet-breed').text(data[i].breed);
+                petTemplate.find('.pet-age').text(data[i].age);
+                petTemplate.find('.pet-location').text(data[i].location);
+                petTemplate.find('.btn-adopt').attr('data-id', data[i].id);
+                petsRow.append(petTemplate.html());
+            }
+        });
+        return App.initWeb3();
+    },
 
-      for (i = 0; i < data.length; i ++) {
-        petTemplate.find('.panel-title').text(data[i].name);
-        petTemplate.find('img').attr('src', data[i].picture);
-        petTemplate.find('.pet-breed').text(data[i].breed);
-        petTemplate.find('.pet-age').text(data[i].age);
-        petTemplate.find('.pet-location').text(data[i].location);
-        petTemplate.find('.btn-adopt').attr('data-id', data[i].id);
-
-        petsRow.append(petTemplate.html());
-      }
-    });
-
-    return App.initWeb3();
-  },
-
-  initWeb3: function() {
-      // Is there an injected web3 instance?
-      if (typeof web3 !== 'undefined') {
-          App.web3Provider = web3.currentProvider;
-      } else {
-          // If no injected web3 instance is detected, fall back to Ganache
-          App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
-      }
-      web3 = new Web3(App.web3Provider);
-
-    return App.initContract();
-  },
+    initWeb3: function() {
+        // Is there an injected web3 instance?
+        if (typeof web3 !== 'undefined') {
+            App.web3Provider = web3.currentProvider;
+        } else {
+            // If no injected web3 instance is detected, fall back to Ganache
+            App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
+        }
+        web3 = new Web3(App.web3Provider);
+        return App.initContract();
+    },
 
   initContract: function() {
     $.getJSON('guessnumber.json', function(data) {
@@ -59,7 +55,7 @@ App = {
       console.log('markAdopted');
       App.contracts.Guessnumber.deployed().then(function(instance) {
           GuessnumberInstance = instance;
-          console.log(web3.eth);
+          console.log("Contract Address:", GuessnumberInstance.address);
           // How do I call web3.eth.getBalance() in metamask?
           // https://github.com/MetaMask/faq/issues/23
           web3.eth.getBalance(GuessnumberInstance.address, 'latest', function(error, balance){
@@ -85,7 +81,7 @@ App = {
               GuessnumberInstance = instance;
               return GuessnumberInstance.guess(ans, {
                   from: account,
-                  value:  10000000000000000, //0.01 ETH
+                  value: 10000000000000000, //0.01 ETH
               });
           }).then(function(result) {
               console.log(result);
