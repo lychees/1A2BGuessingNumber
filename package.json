@@ -1,18 +1,29 @@
 {
-  "name": "pet-shop",
-  "version": "1.0.0",
+  "name": "1A2B-guessing-number",
+  "version": "0.1.0",
   "description": "",
   "main": "truffle.js",
   "directories": {
     "test": "test"
   },
+  "dependencies": {
+    "bignumber.js": "^5.0.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "web3": "^0.20.3"
+  },
   "scripts": {
-    "dev": "lite-server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "dev": "lite-server"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "lite-server": "^2.3.0"
+    "lite-server": "^2.3.0",
+    "react-scripts": "1.0.17",
+    "opn-cli": "^3.1.0"
   }
 }
