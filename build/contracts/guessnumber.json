@@ -664,7 +664,7 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 256,
+                                              "referencedDeclaration": 313,
                                               "type": "block",
                                               "value": "block"
                                             },
@@ -695,7 +695,7 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 256,
+                                              "referencedDeclaration": 313,
                                               "type": "block",
                                               "value": "block"
                                             },
@@ -731,7 +731,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 256,
+                                          "referencedDeclaration": 313,
                                           "type": "block",
                                           "value": "block"
                                         },
@@ -1489,7 +1489,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 267,
+                              "referencedDeclaration": 324,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -1530,7 +1530,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 264,
+                                      "referencedDeclaration": 321,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -3273,7 +3273,7 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 275,
+                                              "referencedDeclaration": 332,
                                               "type": "contract guessnumber",
                                               "value": "this"
                                             },
@@ -3370,7 +3370,7 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 264,
+                                              "referencedDeclaration": 321,
                                               "type": "msg",
                                               "value": "msg"
                                             },
@@ -3421,7 +3421,7 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 275,
+                                              "referencedDeclaration": 332,
                                               "type": "contract guessnumber",
                                               "value": "this"
                                             },
@@ -3647,5 +3647,5 @@
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-01-11T19:54:03.059Z"
+  "updatedAt": "2018-01-14T08:31:31.378Z"
 }
