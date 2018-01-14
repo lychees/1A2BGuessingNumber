@@ -2,6 +2,15 @@
 
 Online guessing number game in Ethereum.
 
+### Deploy
+
+```
+$ npm install -g truffle
+$ npm install
+$ truffle compile
+$ npm dev run
+```
+
 # Refs
 
 - www.spoj.com/problems/GUESSING/
