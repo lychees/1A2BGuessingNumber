@@ -1,28 +1,40 @@
 .App {
-  text-align: center;
+  height: 100vh;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.Header {
+  display: flex;
+  justify-content: space-between;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
+.Balance {
   color: white;
 }
 
-.App-title {
-  font-size: 1.5em;
+.Settings {
+  width: 400px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.App-intro {
-  font-size: large;
+.GameModeSelect {
+  width: 170px;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.NetworkSelect {
+  width: 200px;
+}
+
+.Content {
+  display: flex;
+  padding: 24px 50px 0;
+}
+
+.GameRule p {
+  text-indent: 2em;
+}
+
+.AlertMessages .ant-alert {
+  margin-top: 30px;
 }
