@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "",
   "main": "truffle.js",
+  "homepage": "https://lychees.github.io/1A2BGuessingNumber/",
   "directories": {
     "test": "test"
   },
