@@ -106,3 +106,6 @@ tags
 
 # webstorm
 .idea
+
+# project
+build
