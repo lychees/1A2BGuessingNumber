@@ -8,6 +8,10 @@ import GuessNumber from "./components/GuessNumber";
 
 import './App.css';
 
+import contract from './contracts/guessnumber.json';
+
+console.log(contract);
+
 const { Header, Content, Footer } = Layout;
 
 class App extends Component {

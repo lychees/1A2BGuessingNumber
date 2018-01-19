@@ -15,6 +15,7 @@
     "web3": "^0.20.3"
   },
   "scripts": {
+    "compile": "./node_modules/.bin/truffle compile && cp build/contracts -r src/",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
@@ -22,12 +23,11 @@
     "dev": "lite-server"
   },
   "author": "",
-  "license": "ISC",
   "devDependencies": {
     "babel-plugin-import": "^1.6.3",
-    "lite-server": "^2.3.0",
     "opn-cli": "^3.1.0",
     "react-app-rewired": "^1.4.0",
-    "react-scripts": "1.0.17"
+    "react-scripts": "1.0.17",
+    "truffle": "^4.0.4"
   }
 }
