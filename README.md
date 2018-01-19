@@ -1,14 +1,27 @@
 # 1A2BGuessingNumber
-
 Online guessing number game in Ethereum.
 
-### Deploy
-
+## Getting Start
 ```
-$ npm install -g truffle
-$ npm install
-$ truffle compile
-$ npm dev run
+npm install
+npm start
+```
+
+### Deploy Github Pages
+```
+npm run deploy
+```
+
+### Compile Contracts
+
+```bash
+npm run compile 
+ ```
+If it's not working on windows, try to install a global truffle
+
+```bash
+npm i -g truffle
+truffle compile && cp -r build/contracts src/
 ```
 
 # Refs
