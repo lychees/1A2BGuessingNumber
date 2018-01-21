@@ -1,5 +1,5 @@
 pragma solidity ^0.4.18;
-contract guessnumber {
+contract _1a2bPve {
     mapping(uint => uint) public answer;
     uint public seed = 2569;
 
@@ -9,7 +9,7 @@ contract guessnumber {
     event Accepted(uint reward);
 
 	// create a four-digit random number
-	function newGame() {
+	function newGame() internal {
 		seed = block.timestamp+block.difficulty+block.number + 256;
 
 		for (uint i=0;i<4;i++) {
@@ -20,7 +20,7 @@ contract guessnumber {
 		NewGame();
 	}
 
-	function guessnumber() {
+	function _1a2bPve() public {
 		newGame();
 	}
 
@@ -28,7 +28,7 @@ contract guessnumber {
 	// A = count of digits that meet the right number
 	// B = count of numbers that exist but at a wrong place
 	// eg: if the answer is 1234, then 3254 = 2A1B
-	function guess(uint _answer) payable returns(uint A,uint B){
+	function guess(uint _answer) payable public returns(uint A,uint B){
 		require(msg.value >= 10);
 
 		uint[] memory guessanswer = new uint[](4);
