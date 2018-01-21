@@ -1,13 +1,14 @@
 import React from 'react';
 import { Card, Button, InputNumber, Form, notification, Alert } from 'antd';
 
-import { calcResult, translateResult, isValidAnswer } from '../utils/game';
+import { calcResult, translateResult, isValidAnswer } from '../../utils/game';
 
-import web3 from '../web3';
+import web3 from '../../web3'
+import contractJson from 'contracts/_1a2bPve.json';
 
-import './GuessNumber.css';
+import '../GuessNumber.css';
 
-class GuessNumber extends React.Component {
+class OfflinePvp extends React.Component {
   state = {
     puzzle: 0,
     answer: 0,
@@ -25,7 +26,7 @@ class GuessNumber extends React.Component {
     notification.config({ placement: 'bottomRight' });
 
     // TODO: listen to guessNumber event and game over event
-    setInterval(() => {
+    this.interval = setInterval(() => {
       console.log(this.state.currentAnswer, this.state.answers);
       if (this.state.currentPuzzle != null && this.state.currentAnswer != null) {
         // use own answer as opponent's answer to give result to opponent
@@ -51,6 +52,10 @@ class GuessNumber extends React.Component {
     }, 1000);
   }
 
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
   createRoom = (puzzle, callback) => {
     // TODO: call web3 method to create room;
     console.log('createRoom', puzzle);
@@ -60,6 +65,11 @@ class GuessNumber extends React.Component {
   joinGame = (puzzle, callback) => {
     // TODO: call web3 method to join game;
     console.log('joinGame', puzzle);
+    var MyContract = web3.eth.contract(contractJson.abi);
+    var contractInstance = MyContract.at('0x32163d30ed87fafd3bcc45f77cef437bf7bfd9b4');
+    console.log(web3.version.defaultAccount);
+    contractInstance.guess(1, { value: web3.toWei('1', 'mwei'), data: 12312, gas: 220000 }, console.log);
+
     setTimeout(() => callback(Math.random() > 0.5, '0x222'), 1000);
   };
 
@@ -271,4 +281,4 @@ class GuessNumber extends React.Component {
   }
 }
 
-export default GuessNumber;
+export default OfflinePvp;
