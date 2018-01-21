@@ -7,11 +7,10 @@ const gameModes = [
 
 gameModes.default = gameModes[0];
 
-const networks = [
-  'Ethereum Mainnet',
-  'Ethereum Kovan testnet',
-  'Qtum Testnet',
-];
+const networks = {
+  1: 'Ethereum Mainnet',
+  42: 'Ethereum Kovan testnet',
+};
 
 networks.default = networks[1];
 

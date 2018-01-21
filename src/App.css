@@ -5,14 +5,11 @@
 .Header {
   display: flex;
   justify-content: space-between;
-}
-
-.Balance {
   color: white;
 }
 
 .Settings {
-  width: 400px;
+  width: 180px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -20,10 +17,6 @@
 
 .GameModeSelect {
   width: 170px;
-}
-
-.NetworkSelect {
-  width: 200px;
 }
 
 .Content {
