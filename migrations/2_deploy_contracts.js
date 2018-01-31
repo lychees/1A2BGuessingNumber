@@ -1,5 +1,5 @@
-var Guess = artifacts.require("guessnumber");
+var Guess = artifacts.require("BinaryPve");
 
-module.exports = function(deployer) {
+module.exports = function (deployer) {
     deployer.deploy(Guess);
 };
