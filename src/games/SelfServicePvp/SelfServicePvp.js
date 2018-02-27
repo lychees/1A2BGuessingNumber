@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, InputNumber, Form, Button, Divider, Input } from 'antd';
+import { Card, InputNumber, Form, Button, Divider, Input, notification } from 'antd';
 
 // import { translateResult, isValidAnswer, etherFromWei } from '../../utils/game';
 
@@ -8,68 +8,76 @@ import web3 from '../../web3'
 
 import '../GuessNumber.css';
 
-var contract = web3.eth.contract(contractJson.abi).at('0x32163d30ed87fafd3bcc45f77cef437bf7bfd9b4');
+var contract = web3.eth.contract(contractJson.abi).at('0xf25186b5081ff5ce73482ad761db0eb0d25abfbf');
 
 class SelfServicePvp extends React.Component {
 
 	state = {
-		joinedGame: true,
+		joinedGame: false,
 		evidence: 0,
 		canGuess: false,
 		canReply: false,
-		historyText: "safsadfsadf"+"\n"+"afsfa"+"\n"+"afsfa"+"\n"+"afsfa"+"\n"+"afsfa",
+		historyText: "",
 		inputNum: 0,
-		guessResult: ""
+		guessResult: "",
+		isLoading: false
 	};
 
   componentDidMount() {
+  	var that = this;
 
     contract.NewRoom({ p: web3.eth.defaultAccount })
 		.watch(function(error, result){
-		    console.log("Event are as following:-------");
-		    
-		    for(let key in result){
-		     console.log(key + " : " + result[key]);
-		    }
-		    
-		    console.log("Event ending-------");
+		    // console.log("Event are as following:-------");
+		    // for(let key in result){
+		    //  console.log(key + " : " + result[key]);
+		    // }
+		    // console.log("Event ending-------");
+		    that.setState({ joinedGame: true });
+		    that.setState({ historyText: "你创建了房间，正在等待其他玩家…" });
 		});
 
     contract.JoinRoom({ p: web3.eth.defaultAccount })
 		.watch(function(error, result){
+		    // console.log("Event ending-----JoinRoom--");
+		    that.setState({ joinedGame: true, canGuess: true });
+		    that.setState({ historyText: "你进入了房间，游戏开始。" });
 		});
 
     contract.Guess()
 		.watch((error, { args: { p1: player1, p2: player2, s: guessnum } }) => { 
-			this.dealWithGuessProcess(player1.toString(), player2.toString(), Number(guessnum.toString()), 0);
+			that.dealWithGuessProcess(player1.toString(), player2.toString(), Number(guessnum.toString()), 0);
 		});
 
     contract.WrongAnswer()
 		.watch((error, { args: { p1: player1, p2: player2, z: hint } }) => {
-			this.dealWithGuessProcess(player1.toString(), player2.toString(), Number(hint.toString()), 1);
+			that.dealWithGuessProcess(player1.toString(), player2.toString(), Number(hint.toString()), 1);
 		});
 
     contract.Accepted()
 		.watch((error, { args: { p1: player1, p2: player2 } }) => {
-			this.dealWithGuessProcess(player1.toString(), player2.toString(), 0, 2);
+			that.dealWithGuessProcess(player1.toString(), player2.toString(), 0, 2);
 		});
 
     contract.Draw()
 		.watch((error, { args: { p1: player1, p2: player2 } }) => {
-			this.setState({ guessResult: "loading" });
+			that.setState({ guessResult: "loading" });
 		});
 
     contract.Win()
 		.watch((error, { args: { p1: player1, p2: player2, r: rw} }) => {
 			if(web3.eth.defaultAccount == player1) {
-				this.setState({ guessResult: "you" });
+				that.setState({ guessResult: "you" });
 			}else{
-				this.setState({ guessResult: "other" });
+				that.setState({ guessResult: "other" });
 			}
 		});
 
   }
 
+	/**
+	 * 文本框展示互相猜数字过程
+	 */
 	dealWithGuessProcess(player1, player2, num, type) {
 		var text = this.state.historyText;
 		switch(type) 
@@ -99,25 +107,45 @@ class SelfServicePvp extends React.Component {
 		this.setState({ historyText: text });
 	}
 
+	/**
+	 * 处理合约返回的错误
+	 */
+	dealWithError(error) {
+		console.log(error);
+        notification.open({
+          message: '提交失败',
+          description: '请尝试重新提交',
+        });
+	}
+
   /**
 	 * buttons handle
 	 */	
 
 	joinGame() {
-		 contract.join(this.state.evidence, 
-		 	{ value: web3.fromWei("1", 'wei'),gas: 220000 }, 
+		this.setState({ isLoading: true });
+		var that = this;
+		console.log(this.state.evidence)
+		var s = web3.sha3(this.state.evidence.toString());
+		console.log(s)
+		 contract.join(s, 
+		 	{ gas: 220000, value:web3.fromWei(111, 'wei') }, 
 		 	function(error, result){
-			     if(!error)
-			         console.log("result:"+result);
-			     else
-			         console.error(error);
+				that.setState({ isLoading: false });
+			    if (error) {
+			    	that.dealWithError(error);
+			    } else {
+			    };
 			});
 	}
 
+	
+
+
 	handleReplyClicked() {
 		this.setState({ canReply: false });
-		contract.answer(this.state.inputNum, 
-		 	{ value: web3.fromWei("1", 'wei'),gas: 220000 }, 
+		contract.answer(web3.toHex(this.state.inputNum), 
+		 	{ gas: 220000 }, 
 		 	function(error, result){
 		 		this.setState({
 			      canReply: false
@@ -128,7 +156,7 @@ class SelfServicePvp extends React.Component {
 	handleGuessClicked() {
 		this.setState({ canGuess: false });
 		contract.guess(this.state.inputNum, 
-		 	{ value: web3.fromWei("1", 'wei'),gas: 220000 }, 
+		 	{ gas: 220000 }, 
 		 	function(error, result){
 		 		this.setState({
 			      canGuess: false
@@ -154,7 +182,7 @@ class SelfServicePvp extends React.Component {
 						<InputNumber type="text" value={this.state.evidence} onChange={this.handleEvidenceChanged} />
 					</Form.Item>
 					<Form.Item>
-						<Button type="primary" onClick={this.joinGame.bind(this)}> 加入游戏 </Button>
+						<Button type="primary" onClick={this.joinGame.bind(this)} disabled={this.state.isLoading}> 加入游戏 </Button>
 					</Form.Item>
 				</Form>
 	}
@@ -162,15 +190,14 @@ class SelfServicePvp extends React.Component {
 	renderGameProcess() {
 		return <Form>
 					<Form.Item>
-						<textarea readonly="true" style={{width:300+"px", height:100+"px"}} rows="3" cols="5">
-							{this.state.historyText}
+						<textarea readOnly="true" style={{width:300+"px", height:100+"px"}} rows="3" cols="5" value={this.state.historyText}>
 						</textarea>
 					</Form.Item>
 					<Form.Item>
 						<InputNumber type="text" value={this.state.inputNum} onChange={this.handleGuessnumChanged} />
-						<Button type="primary" disabled={this.state.canGuess} onClick={this.handleGuessClicked.bind(this)}> 猜数 </Button>
+						<Button type="primary" disabled={!this.state.canGuess} onClick={this.handleGuessClicked.bind(this)}> 猜数 </Button>
 						<Divider type="vertical" />
-						<Button type="primary" disabled={this.state.canReply} onClick={this.handleReplyClicked.bind(this)}> 回答 </Button>
+						<Button type="primary" disabled={!this.state.canReply} onClick={this.handleReplyClicked.bind(this)}> 回答 </Button>
 					</Form.Item>
 				</Form>
 	}
